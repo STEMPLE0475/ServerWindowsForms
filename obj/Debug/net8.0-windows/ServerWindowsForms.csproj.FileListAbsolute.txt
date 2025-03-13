@@ -14,3 +14,20 @@ C:\Users\stemp\source\repos\ServerWindowsForms\obj\Debug\net8.0-windows\refint\S
 C:\Users\stemp\source\repos\ServerWindowsForms\obj\Debug\net8.0-windows\ServerWindowsForms.pdb
 C:\Users\stemp\source\repos\ServerWindowsForms\obj\Debug\net8.0-windows\ServerWindowsForms.genruntimeconfig.cache
 C:\Users\stemp\source\repos\ServerWindowsForms\obj\Debug\net8.0-windows\ref\ServerWindowsForms.dll
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\bin\Debug\net8.0-windows\ServerWindowsForms.exe
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\bin\Debug\net8.0-windows\ServerWindowsForms.deps.json
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\bin\Debug\net8.0-windows\ServerWindowsForms.runtimeconfig.json
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\bin\Debug\net8.0-windows\ServerWindowsForms.dll
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\bin\Debug\net8.0-windows\ServerWindowsForms.pdb
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\obj\Debug\net8.0-windows\ServerWindowsForms.Form1.resources
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\obj\Debug\net8.0-windows\ServerWindowsForms.csproj.GenerateResource.cache
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\obj\Debug\net8.0-windows\ServerWindowsForms.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\obj\Debug\net8.0-windows\ServerWindowsForms.AssemblyInfoInputs.cache
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\obj\Debug\net8.0-windows\ServerWindowsForms.AssemblyInfo.cs
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\obj\Debug\net8.0-windows\ServerWindowsForms.csproj.CoreCompileInputs.cache
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\obj\Debug\net8.0-windows\ServerWindowsForms.sourcelink.json
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\obj\Debug\net8.0-windows\ServerWindowsForms.dll
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\obj\Debug\net8.0-windows\refint\ServerWindowsForms.dll
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\obj\Debug\net8.0-windows\ServerWindowsForms.pdb
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\obj\Debug\net8.0-windows\ServerWindowsForms.genruntimeconfig.cache
+C:\Users\stemp\OneDrive\바탕 화면\CSProject\ServerWindowsForms\obj\Debug\net8.0-windows\ref\ServerWindowsForms.dll

@@ -1,25 +1,24 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ServerWindowsForms
 {
-
     public partial class Form1 : Form
     {
-        private TcpListener server;
-        private List<TcpClient> clients = new List<TcpClient>(); // 연결된 클라이언트 리스트
+        private UdpClient udpServer; // UDP 서버
         private bool isRunning = false;
-        //private DateTime serverTime;
+        private int port; // default port : 9000
+        const int DEFAULT_PORT = 9000;
 
         public Form1()
         {
             InitializeComponent();
+            portText.PlaceholderText = DEFAULT_PORT.ToString();
         }
 
         private async void btnStartServer_Click(object sender, EventArgs e)
@@ -27,72 +26,60 @@ namespace ServerWindowsForms
             if (!isRunning)
             {
                 StartServer();
-                await AcceptClients();
+                Task.Run(() => ReceiveUdpMessages()); // UDP 수신 시작
             }
         }
 
         private void StartServer()
         {
-            const int port = 5000;
-            server = new TcpListener(IPAddress.Any, port);
-            server.Start();
+            SetPort();
+            udpServer = new UdpClient(port); // UDP 바인딩
             isRunning = true;
-            lblStatus.Text = "서버 실행 중...";
+
+            lblStatus.Text = "서버 작동 중...";
             btnStartServer.Enabled = false;
             btnStopServer.Enabled = true;
         }
 
-        private async Task AcceptClients()
+        private void SetPort()
         {
-            while (isRunning)
+            if (!string.IsNullOrWhiteSpace(portText.Text))
             {
-                TcpClient client = await server.AcceptTcpClientAsync();
-                clients.Add(client);
-                UpdateClientList();
-
-                Task.Run(() => HandleClient(client));
+                this.port = int.Parse(portText.Text);
+            }
+            else
+            {
+                port = DEFAULT_PORT;
+            }
+            portText.Enabled = false;
+        }
+        private void portText_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // 숫자와 백스페이스만 허용
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; // 입력을 취소
             }
         }
 
-        private async Task HandleClient(TcpClient client)
+        private async void ReceiveUdpMessages()
         {
-            NetworkStream stream = client.GetStream();
-            byte[] buffer = new byte[1024];
-
             while (isRunning)
             {
                 try
                 {
-                    int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
-                    if (bytesRead == 0) break;
+                    UdpReceiveResult result = await udpServer.ReceiveAsync();
+                    string receivedMessage = Encoding.UTF8.GetString(result.Buffer);
 
-                    string receivedMessage = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                    Invoke((MethodInvoker)(() => lstClients.Items.Add($"받음: {receivedMessage}")));
+                    SafeInvoke(() => console.Items.Add($"{receivedMessage}"));
                 }
-                catch
+                catch (Exception ex)
                 {
+                    SafeInvoke(() => console.Items.Add($"오류: {ex.Message}"));
                     break;
                 }
             }
-
-            clients.Remove(client);
-            client.Close();
-            UpdateClientList();
         }
-
-        private void UpdateClientList()
-        {
-            Invoke((MethodInvoker)(() =>
-            {
-                lstClients.Items.Clear();
-                foreach (var client in clients)
-                {
-                    IPEndPoint endPoint = (IPEndPoint)client.Client.RemoteEndPoint;
-                    lstClients.Items.Add($"{endPoint.Address}:{endPoint.Port}");
-                }
-            }));
-        }
-
 
         private void btnStopServer_Click(object sender, EventArgs e)
         {
@@ -102,30 +89,24 @@ namespace ServerWindowsForms
         private void StopServer()
         {
             isRunning = false;
-            server.Stop();
-
-            foreach (var client in clients)
-            {
-                client.Close();
-            }
-            clients.Clear();
+            udpServer?.Close(); // 소켓 종료
 
             lblStatus.Text = "서버 중지됨";
-            lstClients.Items.Clear();
+            console.Items.Clear();
             btnStartServer.Enabled = true;
             btnStopServer.Enabled = false;
+            portText.Enabled = true;
+            //예기치 못한 서버 종료시는?
         }
 
-        /*private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void SafeInvoke(Action action)
         {
-            StopServer();
-        }*/
-
-        private void GetServerTime(TcpClient client)
-        {
-            string response = $"서버 시간: {DateTime.Now}";
-            byte[] responseData = Encoding.UTF8.GetBytes(response);
-            client.GetStream().Write(responseData, 0, responseData.Length); // 데이터 송신
+            if (IsHandleCreated)
+            {
+                Invoke(new MethodInvoker(action));
+            }
         }
+
+
     }
 }
